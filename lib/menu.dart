@@ -15,7 +15,7 @@ class ShopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.indigo,
+      color: Color.fromARGB(255, 171, 122, 199),
       child: InkWell(
         // Area responsive terhadap sentuhan
         onTap: () {
@@ -79,8 +79,10 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Shopping List',
+          'Pacil Library',
+          style: TextStyle(color: Colors.white),
         ),
+        backgroundColor:  Color.fromARGB(255, 171, 122, 199),
       ),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
@@ -93,7 +95,7 @@ class MyHomePage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                 // Widget Text untuk menampilkan tulisan dengan alignment center dan style yang sesuai
                 child: Text(
-                  'PBP Shop', // Text yang menandakan toko
+                  'Pacil Library', // Text yang menandakan toko
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
