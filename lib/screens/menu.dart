@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pacil_lib/widgets/left_drawer.dart';
+import 'package:pacil_lib/widgets/shop_card.dart';
+import 'package:pacil_lib/screens/shoplist_form.dart';
 
-class ShopItem {
-  final String name;
-  final IconData icon;
 
-  ShopItem(this.name, this.icon);
-}
 
 class ShopCard extends StatelessWidget {
   final ShopItem item;
@@ -15,7 +13,7 @@ class ShopCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color.fromARGB(255, 171, 122, 199),
+      color: item.color,
       child: InkWell(
         // Area responsive terhadap sentuhan
         onTap: () {
@@ -23,7 +21,13 @@ class ShopCard extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(SnackBar(
-                content: Text("Kamu telah menekan tombol ${item.name}!")));
+              content: Text("Kamu telah menekan tombol ${item.name}!")));
+            if (item.name == "Tambah Item") {
+            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
+             Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ShopFormPage()));
+          }
+          
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text
@@ -54,9 +58,9 @@ class ShopCard extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
     MyHomePage({Key? key}) : super(key: key);
     final List<ShopItem> items = [
-    ShopItem("Lihat Item", Icons.checklist),
-    ShopItem("Tambah Item", Icons.add_shopping_cart),
-    ShopItem("Logout", Icons.logout),
+    ShopItem("Lihat Item", Icons.checklist, const Color.fromARGB(255, 195, 146, 224)),
+    ShopItem("Tambah Item", Icons.add_shopping_cart, Color.fromARGB(255, 135, 97, 157)),
+    ShopItem("Logout", Icons.logout,Color.fromARGB(255, 101, 70, 118)),
 ];
     
 
@@ -82,8 +86,11 @@ class MyHomePage extends StatelessWidget {
           'Pacil Library',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor:  Color.fromARGB(255, 171, 122, 199),
+        backgroundColor:  const Color.fromARGB(255, 175, 128, 196),
+        foregroundColor: Colors.white,
       ),
+      // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
+      drawer: const LeftDrawer(),
       body: SingleChildScrollView(
         // Widget wrapper yang dapat discroll
         child: Padding(
