@@ -113,8 +113,6 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   },
                 ),
               ),
-
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
