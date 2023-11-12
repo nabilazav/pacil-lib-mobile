@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // TODO: Impor drawer yang sudah dibuat sebelumnya
 import 'package:pacil_lib/widgets/left_drawer.dart';
+import 'package:pacil_lib/models/pacil_lib_models.dart';
+
+List<Item> itemList = [];
 
 class ShopFormPage extends StatefulWidget {
     const ShopFormPage({super.key});
@@ -109,7 +113,11 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   },
                 ),
               ),
-              Align(
+
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -120,6 +128,12 @@ class _ShopFormPageState extends State<ShopFormPage> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        Item newItem = Item(
+                          name: _name,
+                          amount: _amount,
+                          description: _description,
+                        );
+                        itemList.add(newItem);
                         showDialog(
                           context: context,
                           builder: (context) {
@@ -156,13 +170,14 @@ class _ShopFormPageState extends State<ShopFormPage> {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  
+                ),
                 ),
               ),
             ],
+          
           ),
         ),
-        ),
-      );
-    }
+      ),
+    );
+  }
 }

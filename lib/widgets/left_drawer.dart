@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pacil_lib/screens/menu.dart';
-import 'package:pacil_lib/screens/shoplist_form.dart';
+import 'package:pacil_lib/screens/pacil_lib_form.dart';
+import 'package:pacil_lib/screens/pacil_lib_page.dart';
+
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -69,7 +71,18 @@ class LeftDrawer extends StatelessWidget {
                   ));
             },
           ),
-          
+           ListTile(
+            leading: const Icon(Icons.checklist),
+            title: const Text('Lihat Item'),
+            // Bagian redirection ke FragranceFormPage
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ItemListPage(itemList: itemList),
+                  ));
+            },
+          )
         ],
       ),
     );
