@@ -244,7 +244,9 @@ isi kode ini pada file dan tambahkan pada bagian drawer header
 ```dart
 import 'package:flutter/material.dart';
 import 'package:pacil_lib/screens/menu.dart';
-import 'package:pacil_lib/screens/shoplist_form.dart';
+import 'package:pacil_lib/screens/pacil_lib_form.dart';
+import 'package:pacil_lib/screens/pacil_lib_page.dart';
+
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -262,7 +264,7 @@ class LeftDrawer extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      'Shopping List',
+                      'Pacil Library',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 30,
@@ -284,16 +286,7 @@ class LeftDrawer extends StatelessWidget {
                 ),
               ),
           
-        ],
-      ),
-    );
-  }
-}
-```
-- Menambahan routing ke page yang sudah diimport
-```dart
-...
-   // TODO: Bagian routing
+          // TODO: Bagian routing
           ListTile(
             leading: const Icon(Icons.home_outlined),
             title: const Text('Halaman Utama'),
@@ -322,135 +315,40 @@ class LeftDrawer extends StatelessWidget {
                   ));
             },
           ),
-          ...
+           ListTile(
+            leading: const Icon(Icons.checklist),
+            title: const Text('Lihat Item'),
+            // Bagian redirection ke FragranceFormPage
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ItemListPage(itemList: itemList),
+                  ));
+            },
+          )
+        ],
+      ),
+    );
+  }
+}
 ```
 - Menambahkan import drawer widget pada file ```menu.dart```
 ```dart
 import 'package:flutter/material.dart';
 import 'package:pacil_lib/widgets/left_drawer.dart';
-import 'package:pacil_lib/widgets/shop_card.dart';
-import 'package:pacil_lib/screens/shoplist_form.dart';
-
-
-
-class ShopCard extends StatelessWidget {
-  final ShopItem item;
-
-  const ShopCard(this.item, {super.key}); // Constructor
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: item.color,
-      child: InkWell(
-        // Area responsive terhadap sentuhan
-        onTap: () {
-          // Memunculkan SnackBar ketika diklik
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-              content: Text("Kamu telah menekan tombol ${item.name}!")));
-            if (item.name == "Tambah Item") {
-            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
-             Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ShopFormPage()));
-          }
-          
-        },
-        child: Container(
-          // Container untuk menyimpan Icon dan Text
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-class MyHomePage extends StatelessWidget {
-    MyHomePage({Key? key}) : super(key: key);
-    final List<ShopItem> items = [
-    ShopItem("Lihat Item", Icons.checklist, const Color.fromARGB(255, 195, 146, 224)),
-    ShopItem("Tambah Item", Icons.add_shopping_cart, Color.fromARGB(255, 135, 97, 157)),
-    ShopItem("Logout", Icons.logout,Color.fromARGB(255, 101, 70, 118)),
-];
-   @override
-  Widget build(BuildContext context) {
-    
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Pacil Library',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor:  const Color.fromARGB(255, 175, 128, 196),
-        foregroundColor: Colors.white,
-      ),
-      // Masukkan drawer sebagai parameter nilai drawer dari widget Scaffold
-      drawer: const LeftDrawer(),
-      body: SingleChildScrollView(
-        // Widget wrapper yang dapat discroll
-        child: Padding(
-          padding: const EdgeInsets.all(10.0), // Set padding dari halaman
-          child: Column(
-            // Widget untuk menampilkan children secara vertikal
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                // Widget Text untuk menampilkan tulisan dengan alignment center dan style yang sesuai
-                child: Text(
-                  'Pacil Library', // Text yang menandakan toko
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              // Grid layout
-              GridView.count(
-                // Container pada card kita.
-                primary: true,
-                padding: const EdgeInsets.all(20),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                children: items.map((ShopItem item) {
-                  // Iterasi untuk setiap item
-                  return ShopCard(item);
-                }).toList(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-  
-}
+import 'package:pacil_lib/widgets/pacil_lib_card.dart';
 ```
-- Membuat file baru dengan nama shoplist_form.dart dan isi dengan kode.
+
+- Membuat file baru dengan nama pacil_lib_form.dart dan isi dengan kode.
 ```dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // TODO: Impor drawer yang sudah dibuat sebelumnya
 import 'package:pacil_lib/widgets/left_drawer.dart';
+import 'package:pacil_lib/models/pacil_lib_models.dart';
+
+List<Item> itemList = [];
 
 class ShopFormPage extends StatefulWidget {
     const ShopFormPage({super.key});
@@ -601,61 +499,66 @@ Padding(
 ```
 - Mmebuat tombol yang dibungkus ```Padding``` serta ```Align``` yang merupakan child dari ```Column``` untuk membuat pop-up. Lalu tambahkan fungsi ```showDialog()``` di bagian ```onPressed()```. Setelah itu, munculkan ```AlertDialog``` dan menambahkan fungsi reset form
 ```dart
- Align(
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all(const Color.fromARGB(255, 175, 128, 196)),
-            ),
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Item berhasil tersimpan'),
-                      content: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                          children: [
-                          // TODO: Munculkan value-value lainnya
-                            Text('Nama: $_name'),
-                            Text('Jumlah: $_amount'),
-                            Text('Deskripsi: $_description'),
-                          ],
-                        ),
-                      ),
-                      actions: [
-                        TextButton(
-                          child: const Text('OK'),
-                          onPressed: () {
-                            Navigator.pop(context);
+  Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color.fromARGB(255, 175, 128, 196)),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Item newItem = Item(
+                          name: _name,
+                          amount: _amount,
+                          description: _description,
+                        );
+                        itemList.add(newItem);
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Item berhasil tersimpan'),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                  // TODO: Munculkan value-value lainnya
+                                    Text('Nama: $_name'),
+                                    Text('Jumlah: $_amount'),
+                                    Text('Deskripsi: $_description'),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: const Text('OK'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
                           },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }
-              _formKey.currentState!.reset();
-            },
-            child: const Text(
-              "Save",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          
-        ),
-      ),
-    ],
-  ),
-),
+                        );
+                      }
+                      _formKey.currentState!.reset();
+                    },
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                ),
+              ),
 ```
-- Menambahkan kode di file ```menu.dart``` pada widget ```ShopItem``` agar bisa navigasi ke route lain
+- Menambahkan kode di file ```pacil_lib_card.dart``` pada widget ```ShopItem``` agar bisa navigasi ke route lain
 ```dart
  // Area responsive terhadap sentuhan
         onTap: () {
@@ -672,10 +575,12 @@ Padding(
           
         },
 ```
-- Setelah itu membuat file baru yang bernama ```shop_card.dart``` pada folder ```widgets```. Lalu memindahkan isi widget ```ShopItem``` pada ```menu,dart```ke file ```shop_card.cart```
+- Setelah itu membuat file baru yang bernama ```pacil_lib_card.dart``` pada folder ```widgets```. Lalu memindahkan isi widget ```ShopItem``` pada ```menu,dart```ke file ```pacil_lib_card.cart```
 ```dart
 import 'package:flutter/material.dart';
-import 'package:pacil_lib/screens/shoplist_form.dart';
+import 'package:pacil_lib/screens/pacil_lib_form.dart';
+import 'package:pacil_lib/screens/pacil_lib_page.dart';
+
 
 class ShopItem {
   final String name;
@@ -684,9 +589,144 @@ class ShopItem {
 
   ShopItem(this.name, this.icon, this.color);
 }
-```
-- Membuat folder dengan nama ```screens``` pada folder ```lib```. Lalu memindahkan file ```menu.dart``` dan ```shoplist_form.dart``` ke folder ```screens```
 
+
+class ShopCard extends StatelessWidget {
+  final ShopItem item;
+
+  const ShopCard(this.item, {super.key}); // Constructor
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: item.color,
+      child: InkWell(
+        // Area responsive terhadap sentuhan
+        onTap: () {
+          // Memunculkan SnackBar ketika diklik
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              content: Text("Kamu telah menekan tombol ${item.name}!")));
+            if (item.name == "Tambah Item") {
+            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
+             Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ShopFormPage()));
+          }
+          if (item.name == "Lihat Item") {
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ItemListPage(itemList: itemList)));
+          }
+          
+        },
+        child: Container(
+          // Container untuk menyimpan Icon dan Text
+          padding: const EdgeInsets.all(8),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  item.icon,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+                const Padding(padding: EdgeInsets.all(3)),
+                Text(
+                  item.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+- Membuat file baru dengan nama ```pacil_lib_page``` untuk memunculkan item yang ditambahkan. File tersbut berisi kode
+```dart
+import 'package:flutter/material.dart';
+import 'package:pacil_lib/models/pacil_lib_models.dart';
+import 'package:pacil_lib/widgets/left_drawer.dart';
+
+class ItemListPage extends StatelessWidget {
+  final List<Item> itemList; 
+
+  const ItemListPage({Key? key, required this.itemList})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Daftar Item'),
+        backgroundColor: const Color.fromARGB(255, 175, 128, 196),
+        foregroundColor: Colors.white,
+      ),
+      drawer: const LeftDrawer(),
+      body: ListView.builder(
+        itemCount: itemList.length,
+        itemBuilder: (context, index) {
+          return Card(
+            elevation: 5,
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            child: ListTile(
+              title: Text(itemList[index].name),
+              subtitle: Text('Jumlah: ${itemList[index].amount}'),
+              onTap: () {
+                // Menampilkan popup dengan informasi barang yang di-klik
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text(itemList[index].name),
+                      content: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text('Jumlah: ${itemList[index].amount}'),
+                          Text('Deskripsi: ${itemList[index].description}'),
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Tutup'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+
+- Membuat folder dengan nama ```screens``` pada folder ```lib```. Lalu memindahkan file ```menu.dart``` dan ```pacil_lib_form.dart``` dan ```pacil_lib_page``` ke folder ```screens```
+- Membuat folder baru dengan nama ```models``` pada folder ```lib```. Lalu membuat file baru dengan nama ```pacil_lib_models.dart``` isi file dengan kode
+```dart
+class Item {
+  String name;
+  int amount;
+  String description;
+
+  Item({
+    required this.name,
+    required this.amount,
+    required this.description,
+  });
+}
+```
 # pacil_lib
 
 A new Flutter project.
