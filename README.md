@@ -499,7 +499,7 @@ Padding(
 ```
 - Mmebuat tombol yang dibungkus ```Padding``` serta ```Align``` yang merupakan child dari ```Column``` untuk membuat pop-up. Lalu tambahkan fungsi ```showDialog()``` di bagian ```onPressed()```. Setelah itu, munculkan ```AlertDialog``` dan menambahkan fungsi reset form
 ```dart
-  Padding(
+   Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
                 alignment: Alignment.bottomCenter,
@@ -546,9 +546,10 @@ Padding(
                             );
                           },
                         );
-                      }
                       _formKey.currentState!.reset();
+                      }
                     },
+                    
                     child: const Text(
                       "Save",
                       style: TextStyle(color: Colors.white),
@@ -557,23 +558,6 @@ Padding(
                 ),
                 ),
               ),
-```
-- Menambahkan kode di file ```pacil_lib_card.dart``` pada widget ```ShopItem``` agar bisa navigasi ke route lain
-```dart
- // Area responsive terhadap sentuhan
-        onTap: () {
-          // Memunculkan SnackBar ketika diklik
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-              content: Text("Kamu telah menekan tombol ${item.name}!")));
-            if (item.name == "Tambah Item") {
-            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
-             Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ShopFormPage()));
-          }
-          
-        },
 ```
 - Setelah itu membuat file baru yang bernama ```pacil_lib_card.dart``` pada folder ```widgets```. Lalu memindahkan isi widget ```ShopItem``` pada ```menu,dart```ke file ```pacil_lib_card.cart```
 ```dart
@@ -604,20 +588,6 @@ class ShopCard extends StatelessWidget {
         // Area responsive terhadap sentuhan
         onTap: () {
           // Memunculkan SnackBar ketika diklik
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(
-              content: Text("Kamu telah menekan tombol ${item.name}!")));
-            if (item.name == "Tambah Item") {
-            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
-             Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ShopFormPage()));
-          }
-          if (item.name == "Lihat Item") {
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ItemListPage(itemList: itemList)));
-          }
-          
         },
         child: Container(
           // Container untuk menyimpan Icon dan Text
@@ -645,6 +615,23 @@ class ShopCard extends StatelessWidget {
     );
   }
 }
+```
+- Menambahkan kode di file ```pacil_lib_card.dart``` pada widget ```ShopItem``` agar bisa navigasi ke route lain
+```dart
+ // Area responsive terhadap sentuhan
+        onTap: () {
+          // Memunculkan SnackBar ketika diklik
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+              content: Text("Kamu telah menekan tombol ${item.name}!")));
+            if (item.name == "Tambah Item") {
+            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
+             Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ShopFormPage()));
+          }
+          
+        },
 ```
 - Membuat file baru dengan nama ```pacil_lib_page``` untuk memunculkan item yang ditambahkan. File tersbut berisi kode
 ```dart
