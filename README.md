@@ -714,6 +714,59 @@ class Item {
   });
 }
 ```
+
+
+# Tugas 9
+ ## Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+ Ya, kita dapat melakukan pengambilan data JSON tanpa membuat model terlebih dahulu, disebut sebagai "parsing" data JSON. Dalam beberapa kasus, terutama jika struktur data sederhana, tidak perlu membuat model terlebih dahulu. Namun, jika struktur data kompleks, membuat model dapat membantu dalam memahami dan mengelola data dengan lebih baik.
+
+ ## Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+ - CookieRequest merupakan sebuah objek atau kelas yang digunakan untuk mengelola permintaan HTTP yang melibatkan cookies.
+- Instance CookieRequest dibagikan ke semua komponen dalam aplikasi Flutter aagar dapat membantu dalam menjaga konsistensi dan integritas data cookies di seluruh aplikasi. Misalnya, jika ingin melacak sesi pengguna atau informasi autentikasi melalui cookies, instance yang dibagikan ke semua komponen di aplikasi akan memastikan bahwa informasi ini dapat diakses dan diperbarui dengan konsisten di seluruh aplikasi.
+
+ ## Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+ Mekanisme nya melibatkan membuat permintaan HTTP (biasanya dengan menggunakan paket seperti http) untuk mendapatkan data JSON dari server. Setelah menerima respons, data JSON diurai dan dimodelkan ke dalam objek yang sesuai. Widget Flutter kemudian menggunakan objek ini untuk membangun interface pengguna.
+
+ ## Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+ Mekanisme umumnya melibatkan formulir input pengguna di Flutter yang dikirimkan ke backend Django melalui permintaan HTTP. Django akan memproses dan mengautentikasi data tersebut. Jika autentikasi berhasil, server memberikan token atau sesi, yang kemudian dapat disimpan di Flutter dan digunakan untuk permintaan selanjutnya. Ketika token kadaluwarsa, proses autentikasi perlu diulang.
+
+ ## Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+- AppBar: Menampilkan judul "Item".
+- LeftDrawer: Drawer di sebelah kiri dengan opsi navigasi.
+- FutureBuilder: membuat widget yang bergantung pada hasil operasi asynchronous fetchItem.
+- CircularProgressIndicator: Ditampilkan saat data sedang diambil.
+- ListView.builder: Membangun daftar item dengan model Item.
+- MaterialApp: Widget utama untuk aplikasi Flutter.
+- TextField: Input untuk username.
+- TextField: Input untuk password (bersifat tersembunyi).
+- ElevatedButton: Tombol untuk melakukan login.
+- SnackBar: Pesan notifikasi setelah login berhasil atau gagal.
+- Scaffold: Halaman utama dengan app bar, drawer dan login.
+- LeftDrawer: Drawer di sebelah kiri dengan opsi navigasi.
+- GridView.count: Menampilkan item dalam grid.
+- ShopCard: Card untuk setiap item dalam grid.
+- Drawer: Menyediakan menu navigasi ke halaman utama, tambah item, dan lihat item.
+- String name: Nama item.
+- IconData icon: Ikon yang mewakili item.
+- Color color: Warna latar belakang item.
+- Material: Menyediakan latar belakang untuk card.
+- InkWell: Membuat card responsif terhadap sentuhan.
+- Icon: Menampilkan ikon untuk item.
+- Text: Menampilkan nama item.
+- Scaffold: Halaman formulir untuk menambahkan item.
+- Form: Widget untuk menangani formulir.
+- TextFormField: Input untuk nama, jumlah, dan deskripsi item.
+- ElevatedButton: Tombol untuk menyimpan item baru.
+- Provider: Membungkus aplikasi dengan CookieRequest sebagai provider.
+- Container: Widget umum untuk mengelola tata letak dan dekorasi.
+- Column dan Row: Digunakan untuk mengatur widget secara vertikal (Column) atau horizontal (Row).
+- Http Package (http): Digunakan untuk melakukan permintaan HTTP ke server.
+- Navigator: Mengelola navigasi antar halaman dalam aplikasi Flutter.
+- Form dan TextFormField: Untuk mengelola formulir dan input teks
+
+
+
+
 # pacil_lib
 
 A new Flutter project.

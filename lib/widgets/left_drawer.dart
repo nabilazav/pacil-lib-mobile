@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pacil_lib/screens/list_item.dart';
 import 'package:pacil_lib/screens/menu.dart';
 import 'package:pacil_lib/screens/pacil_lib_form.dart';
-import 'package:pacil_lib/screens/pacil_lib_page.dart';
 
 
 class LeftDrawer extends StatelessWidget {
@@ -76,11 +76,10 @@ class LeftDrawer extends StatelessWidget {
             title: const Text('Lihat Item'),
             // Bagian redirection ke FragranceFormPage
             onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ItemListPage(itemList: itemList),
-                  ));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ItemPage()),
+              );
             },
           )
         ],
