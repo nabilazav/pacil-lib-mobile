@@ -51,7 +51,7 @@ class _ItemPageState extends State<ItemPage> {
       }
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Item'),
+          title: const Text('Daftar Item'),
             backgroundColor: const Color.fromARGB(255, 175, 128, 196),
         foregroundColor: Colors.white,
         ),
@@ -121,7 +121,7 @@ class _ItemPageState extends State<ItemPage> {
                           },
                       );
                   }
-              };
+              }
             }
           ),
       );
