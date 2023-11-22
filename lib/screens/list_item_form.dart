@@ -7,7 +7,8 @@ import 'package:pacil_lib/screens/menu.dart';
 import 'package:pacil_lib/widgets/left_drawer.dart';
 
 class ShopFormPage extends StatefulWidget {
-  const ShopFormPage({super.key});
+ final int id;
+  const ShopFormPage({super.key, required this.id});
 
   @override
   State<ShopFormPage> createState() => _ShopFormPageState();
@@ -20,6 +21,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
   String _description = "";
   @override
   Widget build(BuildContext context) {
+    final int id = widget.id;
     final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
@@ -32,7 +34,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
         foregroundColor: Colors.white,
       ),
       // TODO: Tambahkan drawer yang sudah dibuat di sini
-      drawer: const LeftDrawer(),
+      drawer: LeftDrawer(id: id),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -140,7 +142,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyHomePage()),
+                                builder: (context) => MyHomePage(id: id)),
                           );
                         } else {
                           ScaffoldMessenger.of(context)

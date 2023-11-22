@@ -3,7 +3,7 @@ import 'package:pacil_lib/screens/list_item.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:pacil_lib/screens/login.dart';
-import 'package:pacil_lib/screens/pacil_lib_form.dart';
+import 'package:pacil_lib/screens/list_item_form.dart';
 
 class ShopItem {
   final String name;
@@ -16,7 +16,9 @@ class ShopItem {
 class ShopCard extends StatelessWidget {
   final ShopItem item;
 
-  const ShopCard(this.item, {super.key}); // Constructor
+  final int id;
+
+  const ShopCard(this.item, this.id, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,10 @@ class ShopCard extends StatelessWidget {
           if (item.name == "Tambah Item") {
             // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ShopFormPage()));
+                MaterialPageRoute(builder: (context) =>  ShopFormPage(id: id)));
           } else if (item.name == "Lihat Item") {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ItemPage()));
+                MaterialPageRoute(builder: (context) =>  ItemPage(id: id)));
           } else if (item.name == "Logout") {
             final response = await request.logout(
                 // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
